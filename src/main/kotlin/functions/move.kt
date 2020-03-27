@@ -1,6 +1,7 @@
-package functions
+package main.kotlin.functions
 
-import Rover
+import main.kotlin.Position
+import main.kotlin.Rover
 
 fun turnLeft(rover: Rover): String {
     println("turnLeft was called")
@@ -26,25 +27,25 @@ fun turnRight(rover: Rover): String {
     return rover.direction
 }
 
-fun moveForward(rover: Rover): MutableMap<String, Int> {
+fun moveForward(rover: Rover): Position {
     println("moveForward was called")
-    //println("rover position before move ${rover.position}")
-    println("rover travelLog before move ${rover.travelLog}")
+
+    var position = rover.currentPosition
+    //println("rover position before move x = ${position.x}, y = ${position.y}")
 
     when (rover.direction) {
-        "N" -> rover.position.merge("y", 1, Int::minus)
-        "O" -> rover.position.merge("x", 1, Int::plus)
-        "S" -> rover.position.merge("y", 1, Int::plus)
-        "W" -> rover.position.merge("x", 1, Int::minus)
+        "N" -> position.y--
+        "O" -> position.x++
+        "S" -> position.y++
+        "W" -> position.x--
     }
 
-    rover.travelLog.add(rover.position)
-    //println("rover position after move ${rover.position}")
-    println("rover travelLog after move ${rover.travelLog}")
-    return rover.position
+    println("moved to position x = ${position.x}, y = ${position.y}")
+
+    return position
 }
 
-fun moveRover(rover: Rover, moveSequence: String): MutableMap<String, Int> {
+fun moveRover(rover: Rover, moveSequence: String): Rover {
     moveSequence.toLowerCase().forEach { move ->
         run {
             when (move) {
@@ -55,7 +56,7 @@ fun moveRover(rover: Rover, moveSequence: String): MutableMap<String, Int> {
             }
         }
     }
-    println("rover travelLog ${rover.travelLog}")
-    return rover.position
+
+    return rover
 }
 
