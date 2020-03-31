@@ -12,6 +12,7 @@ fun turnLeft(rover: Rover): String {
         "S" -> rover.direction = "O"
         "O" -> rover.direction = "N"
     }
+
     return rover.direction
 }
 
@@ -24,6 +25,7 @@ fun turnRight(rover: Rover): String {
         "S" -> rover.direction = "W"
         "W" -> rover.direction = "N"
     }
+
     return rover.direction
 }
 
@@ -32,6 +34,7 @@ fun moveForward(rover: Rover): Position {
 
     var position = rover.currentPosition
     //println("rover position before move x = ${position.x}, y = ${position.y}")
+    val travelLog = rover.travelLog
 
     when (rover.direction) {
         "N" -> position.y--
@@ -40,12 +43,16 @@ fun moveForward(rover: Rover): Position {
         "W" -> position.x--
     }
 
+    travelLog.add(listOf(position.x, position.y))
+
     println("moved to position x = ${position.x}, y = ${position.y}")
 
     return position
 }
 
 fun moveRover(rover: Rover, moveSequence: String): Rover {
+
+
     moveSequence.toLowerCase().forEach { move ->
         run {
             when (move) {

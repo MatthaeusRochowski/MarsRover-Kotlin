@@ -10,6 +10,7 @@ class Rover(roverId: String) {
     var direction = "N"
 
     // travel log
+    val travelLog = TravelLog(currentPosition).log
 
     init {
         println("$roverId is in position x = ${currentPosition.x}, y = ${currentPosition.y} pointing to direction $direction")
