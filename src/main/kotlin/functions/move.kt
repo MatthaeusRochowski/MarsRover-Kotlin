@@ -1,5 +1,6 @@
 package main.kotlin.functions
 
+import main.kotlin.Grid
 import main.kotlin.Position
 import main.kotlin.Rover
 
@@ -32,20 +33,22 @@ fun turnRight(rover: Rover): String {
 fun moveForward(rover: Rover): Position {
     println("moveForward was called")
 
+    val onGrid = detectGridBoundary(rover, grid = Grid())
     var position = rover.currentPosition
-    //println("rover position before move x = ${position.x}, y = ${position.y}")
     val travelLog = rover.travelLog
 
-    when (rover.direction) {
-        "N" -> position.y--
-        "O" -> position.x++
-        "S" -> position.y++
-        "W" -> position.x--
+    if (onGrid) {
+        when (rover.direction) {
+            "N" -> position.y--
+            "O" -> position.x++
+            "S" -> position.y++
+            "W" -> position.x--
+        }
+        travelLog.add(listOf(position.x, position.y))
+        println("moved to position x = ${position.x}, y = ${position.y}")
+    } else {
+        println("${rover.name} can´t move outside the grid")
     }
-
-    travelLog.add(listOf(position.x, position.y))
-
-    println("moved to position x = ${position.x}, y = ${position.y}")
 
     return position
 }

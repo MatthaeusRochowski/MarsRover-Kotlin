@@ -3,6 +3,9 @@ package main.kotlin
 val position = Position()
 
 class Rover(roverId: String) {
+    //rover name
+    val name = roverId
+
     // rover current position
     var currentPosition = position
 
