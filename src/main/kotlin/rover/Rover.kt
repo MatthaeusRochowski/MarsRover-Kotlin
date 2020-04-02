@@ -1,4 +1,4 @@
-package main.kotlin
+package main.kotlin.rover
 
 val position = Position()
 

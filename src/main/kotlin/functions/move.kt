@@ -1,8 +1,8 @@
 package main.kotlin.functions
 
-import main.kotlin.Grid
-import main.kotlin.Position
-import main.kotlin.Rover
+import main.kotlin.rover.MoveDirection
+import main.kotlin.rover.Position
+import main.kotlin.rover.Rover
 
 fun turnLeft(rover: Rover): String {
     println("turnLeft was called")
@@ -33,7 +33,7 @@ fun turnRight(rover: Rover): String {
 fun moveForward(rover: Rover): Position {
     println("moveForward was called")
 
-    val onGrid = detectGridBoundary(rover, grid = Grid())
+    val onGrid = detectGridBoundary(rover, moveDirection = MoveDirection.moveForward)
     var position = rover.currentPosition
     val travelLog = rover.travelLog
 
@@ -53,6 +53,29 @@ fun moveForward(rover: Rover): Position {
     return position
 }
 
+fun moveBackward(rover: Rover): Position {
+    println("moveBackward was called")
+
+    val onGrid = detectGridBoundary(rover, moveDirection = MoveDirection.moveBackward)
+    var position = rover.currentPosition
+    val travelLog = rover.travelLog
+
+    if (onGrid) {
+        when (rover.direction) {
+            "N" -> position.y++
+            "O" -> position.x--
+            "S" -> position.y--
+            "W" -> position.x++
+        }
+        travelLog.add(listOf(position.x, position.y))
+        println("moved to position x = ${position.x}, y = ${position.y}")
+    } else {
+        println("${rover.name} can´t move outside the grid")
+    }
+
+    return position
+}
+
 fun moveRover(rover: Rover, moveSequence: String): Rover {
 
 
@@ -62,7 +85,8 @@ fun moveRover(rover: Rover, moveSequence: String): Rover {
                 'l' -> turnLeft(rover)
                 'r' -> turnRight(rover)
                 'f' -> moveForward(rover)
-                else -> print("$move is not a valid move, enter 'l', 'r' or 'f' \n" )
+                'b' -> moveBackward(rover)
+                else -> print("$move is not a valid move, enter 'l', 'r', 'f' or 'b' \n" )
             }
         }
     }

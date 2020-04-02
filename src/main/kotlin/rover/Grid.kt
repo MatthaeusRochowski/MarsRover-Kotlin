@@ -1,4 +1,4 @@
-package main.kotlin
+package main.kotlin.rover
 
 class Grid {
     val grid = listOf(

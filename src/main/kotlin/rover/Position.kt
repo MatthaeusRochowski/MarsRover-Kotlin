@@ -1,4 +1,4 @@
-package main.kotlin
+package main.kotlin.rover
 
 class Position {
     var x = 0
