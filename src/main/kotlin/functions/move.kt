@@ -33,21 +33,26 @@ fun turnRight(rover: Rover): String {
 fun moveForward(rover: Rover): Position {
     println("moveForward was called")
 
-    val onGrid = detectGridBoundary(rover, moveDirection = MoveDirection.moveForward)
+    val onGrid = detectGridBoundary(rover, MoveDirection.moveForward)
+    val obstacle = detectObstacle(rover, MoveDirection.moveForward)
     var position = rover.currentPosition
     val travelLog = rover.travelLog
 
     if (onGrid) {
-        when (rover.direction) {
-            "N" -> position.y--
-            "O" -> position.x++
-            "S" -> position.y++
-            "W" -> position.x--
+        if (!obstacle) {
+            when (rover.direction) {
+                "N" -> position.y--
+                "O" -> position.x++
+                "S" -> position.y++
+                "W" -> position.x--
+            }
+            travelLog.add(listOf(position.x, position.y))
+            println("moved to position x = ${position.x}, y = ${position.y}")
+        } else {
+            println("${rover.name} detected an obstacle. Can´t move!")
         }
-        travelLog.add(listOf(position.x, position.y))
-        println("moved to position x = ${position.x}, y = ${position.y}")
     } else {
-        println("${rover.name} can´t move outside the grid")
+        println("${rover.name} can´t move outside the grid!")
     }
 
     return position
@@ -56,19 +61,25 @@ fun moveForward(rover: Rover): Position {
 fun moveBackward(rover: Rover): Position {
     println("moveBackward was called")
 
-    val onGrid = detectGridBoundary(rover, moveDirection = MoveDirection.moveBackward)
+    val onGrid = detectGridBoundary(rover, MoveDirection.moveBackward)
+    val obstacle = detectObstacle(rover, MoveDirection.moveBackward)
     var position = rover.currentPosition
     val travelLog = rover.travelLog
 
     if (onGrid) {
-        when (rover.direction) {
-            "N" -> position.y++
-            "O" -> position.x--
-            "S" -> position.y--
-            "W" -> position.x++
+        if (!obstacle) {
+            when (rover.direction) {
+                "N" -> position.y++
+                "O" -> position.x--
+                "S" -> position.y--
+                "W" -> position.x++
+            }
+            travelLog.add(listOf(position.x, position.y))
+            println("moved to position x = ${position.x}, y = ${position.y}")
         }
-        travelLog.add(listOf(position.x, position.y))
-        println("moved to position x = ${position.x}, y = ${position.y}")
+        else {
+            println("${rover.name} detected an obstacle. Can´t move!")
+        }
     } else {
         println("${rover.name} can´t move outside the grid")
     }
